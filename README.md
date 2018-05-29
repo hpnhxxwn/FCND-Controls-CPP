@@ -4,11 +4,38 @@ This is the readme for the C++ project.
 
 For easy navigation throughout this document, here is an outline:
 
+ - [Body Rate Control & Roll Pitch Control & Thrust Calculation](#body-rate-control-&-roll-pitch-control-&-thrust-calculation)
+ - [Attitude Control & Lateral Position Control & Yaw Control](#attitude-control-&-lateral-position-control-&-yaw-control)
  - [Development environment setup](#development-environment-setup)
  - [Simulator walkthrough](#simulator-walkthrough)
  - [The tasks](#the-tasks)
  - [Evaluation](#evaluation)
 
+## Body Rate Control & Roll Pitch Control & Thrust Calculation
+Body rate controller is a first order system and thus a P controller. We find the error between commanded body rate and the actual rate, then tune the parameter kpPQR to turn the body back to the correct position. 
+
+[pic1]()
+
+After this is done, I implemented the RollPitchControl. The third column of the rotation matrix R will be used to convert the inertial-frame acceleration to world-frame acceleration. A P controller was applied to R13 and R23.
+
+[pic2]()
+
+Another function needs to be filled is GenerateMotorCommands which converts commanded moments to four thrust forces. Below is the equations I used to get the forces, just easy maths.
+
+[pic3]()
+
+Parameters to tune: kpPQR amd kpBank (Scenario 2).
+
+Before tuning the parameter, the drone just flipped to the ground. I gradually increase the value and finally got a set of parameter that makes the drone to satisfy the scenario 2. 
+
+kpPQR = 30, 30, 6
+
+kpBank = 17
+
+Below is the movie for scenario 2.
+
+## Attitude Control & Lateral Position Control & Yaw Control
+This is a PD controller to control the acceleration. The acceleration comes from the thrust.
 
 ## Development Environment Setup ##
 
