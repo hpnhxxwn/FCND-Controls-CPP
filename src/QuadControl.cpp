@@ -74,6 +74,11 @@ VehicleCommand QuadControl::GenerateMotorCommands(float collThrustCmd, V3F momen
 //  cmd.desiredThrustsN[1] = mass * 9.81f / 4.f; // front right
 //  cmd.desiredThrustsN[2] = mass * 9.81f / 4.f; // rear left
 //  cmd.desiredThrustsN[3] = mass * 9.81f / 4.f; // rear right
+
+    // The distance L is the distance from the center of the quad to one of the rotors.
+    // The l is a distance between x-axis and propeller location. l is equal to half of the distance between neighboring propellers at 45° relative to each axis.
+    // F1, F2, F3, F4 for individual thurst command for the front (left,right) and rear (left,right) motors.
+
     float l = L / sqrtf(2.f);
     float F_tau_x = momentCmd.x / l; // F1 - F2 + F3 - F4
     float F_tau_y = momentCmd.y / l; // F1 + F2 - F3 - F4
